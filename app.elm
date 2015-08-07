@@ -16,6 +16,8 @@ import Parser exposing (..)
 
 import Debug
 
+import Regex exposing (..)
+
 main : Signal Html
 main = view <~ model 
 
@@ -79,7 +81,8 @@ port firstCase = Signal.send query.address sample
 
 svgToElm : String -> String
 svgToElm s = 
-  case parse svgToElmParser s of 
+  let  string =replace All (regex "\\n") (\_ -> "") s
+  in  case parse svgToElmParser string of 
                     Err s -> "not svg?"
                     Ok s -> if s == "" then "not svg?" else s
 

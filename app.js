@@ -18,21 +18,33 @@ Elm.App.make = function (_elm) {
    $List = Elm.List.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
    $Parser = Elm.Parser.make(_elm),
+   $Regex = Elm.Regex.make(_elm),
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm),
    $SvgParser = Elm.SvgParser.make(_elm),
    $Task = Elm.Task.make(_elm);
    var svgToElm = function (s) {
       return function () {
-         var _v0 = A2($Parser.parse,
-         $SvgParser.svgToElmParser,
+         var string = A4($Regex.replace,
+         $Regex.All,
+         $Regex.regex("\\n"),
+         function (_v0) {
+            return function () {
+               return "";
+            }();
+         },
          s);
-         switch (_v0.ctor)
-         {case "Err": return "not svg?";
-            case "Ok": return _U.eq(_v0._0,
-              "") ? "not svg?" : _v0._0;}
-         _U.badCase($moduleName,
-         "between lines 82 and 84");
+         return function () {
+            var _v2 = A2($Parser.parse,
+            $SvgParser.svgToElmParser,
+            string);
+            switch (_v2.ctor)
+            {case "Err": return "not svg?";
+               case "Ok": return _U.eq(_v2._0,
+                 "") ? "not svg?" : _v2._0;}
+            _U.badCase($moduleName,
+            "between lines 85 and 87");
+         }();
       }();
    };
    var query = $Signal.mailbox("");
@@ -18619,7 +18631,7 @@ Elm.SvgParser.make = function (_elm) {
                {case "Just": return jstr._0;
                   case "Nothing": return "";}
                _U.badCase($moduleName,
-               "between lines 124 and 127");
+               "between lines 129 and 132");
             }();
          };
          var isJust = function (x) {
@@ -18628,7 +18640,7 @@ Elm.SvgParser.make = function (_elm) {
                {case "Just": return true;
                   case "Nothing": return false;}
                _U.badCase($moduleName,
-               "between lines 120 and 123");
+               "between lines 125 and 128");
             }();
          };
          var justs = A2($List.filter,
@@ -18646,9 +18658,8 @@ Elm.SvgParser.make = function (_elm) {
    $Parser.some(noneOf("><")),
    function (x) {
       return function () {
-         var tex = $String.fromList(x);
-         return _U.eq(tex,
-         "\n") ? $Parser.succeed($Maybe.Nothing) : $Parser.succeed($Maybe.Nothing);
+         var text = $String.fromList(x);
+         return $Parser.succeed($Maybe.Just(text));
       }();
    });
    var generateAttribute = function (ls) {
@@ -18675,7 +18686,7 @@ Elm.SvgParser.make = function (_elm) {
                          "\"")))));}
                     break;}
                _U.badCase($moduleName,
-               "between lines 101 and 105");
+               "between lines 106 and 110");
             }();
          };
          return A2($List.map,f,ls);
@@ -18692,7 +18703,7 @@ Elm.SvgParser.make = function (_elm) {
                case "Nothing":
                return _U.chr(" ");}
             _U.badCase($moduleName,
-            "between lines 79 and 82");
+            "between lines 84 and 87");
          }();
          var upped = function () {
             var _v10 = $List.tail(backPart);
@@ -18704,7 +18715,7 @@ Elm.SvgParser.make = function (_elm) {
                case "Nothing":
                return _L.fromArray([]);}
             _U.badCase($moduleName,
-            "between lines 82 and 85");
+            "between lines 87 and 90");
          }();
          return A2($List.append,
          frontPart,
@@ -18888,7 +18899,7 @@ Elm.SvgParser.make = function (_elm) {
          switch (_v34.ctor)
          {case "_Tuple0": return tag;}
          _U.badCase($moduleName,
-         "on line 109, column 35 to 38");
+         "on line 114, column 35 to 38");
       }();
    })),
    bodyText);

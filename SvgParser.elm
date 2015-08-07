@@ -34,14 +34,19 @@ xmlDecl =
 tag : Parser (Maybe String)
 tag =   
     (token "<" ) 
-    `Parser.andThen` \_ -> spaces 
-    `Parser.andThen` \_ -> many (noneOf " <>/")
+    `Parser.andThen` \_ -> 
+      spaces 
+    `Parser.andThen` \_ -> 
+      many (noneOf " <>/")
     `Parser.andThen` \name' ->
-       let name = String.fromList name'
-       in spaces
-    `Parser.andThen` \_ -> many attribute
-    `Parser.andThen` \attributePart -> spaces
-    `Parser.andThen` \_ -> (token ">" <|> token "/>") 
+      let name = String.fromList name'
+      in spaces
+    `Parser.andThen` \_ -> 
+      many attribute
+    `Parser.andThen` \attributePart -> 
+      spaces
+    `Parser.andThen` \_ -> 
+      (token ">" <|> token "/>") 
     `Parser.andThen` \close ->
        if String.length close == 2 
         then succeed <| Just <| jenerateOneLineTag name attributePart
@@ -112,8 +117,8 @@ bodyText : Parser (Maybe String)
 bodyText = 
         (some <| noneOf "><" )
         `Parser.andThen` \x ->
-        let tex = String.fromList x
-        in if tex == "\n" then succeed Nothing else succeed Nothing
+        let text = String.fromList x
+        in succeed <| Just text
 
 filterJoin : String -> List (Maybe String) -> String
 filterJoin s list =
