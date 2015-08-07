@@ -14,7 +14,7 @@ module.exports = function(grunt) {
     elm: {
       dev :{
         files: {
-          "./app.js": "./*.elm"
+          "./app.js": "./app.elm"
         }
       }
     },
