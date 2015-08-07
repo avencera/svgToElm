@@ -33,7 +33,7 @@ update action state =
 view : String -> Html
 view result =
    div [] [ 
-          container_ [ div [class "page-header" ] [h1 [] [text "svg -> elm-svg Function"]]  ]
+          container_ [ div [class "page-header" ] [h1 [] [text "svg -> elm-svg"]]  ]
           , textField result
                        
           ]
